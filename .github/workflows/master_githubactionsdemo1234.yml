@@ -24,7 +24,7 @@ jobs:
         dotnet-version: '3.1.301'
 
     - name: Build with dotnet
-      run: $loc=Get-Location echo $loc dotnet build ContosoCrafts.Website/ContosoCrafts.Website.csproj --configuration Release
+      run: dotnet build ContosoCrafts.Website/ContosoCrafts.Website.csproj --configuration Release
 
     - name: dotnet publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
