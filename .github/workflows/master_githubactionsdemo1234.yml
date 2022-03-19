@@ -41,7 +41,7 @@ jobs:
     - name: Deploy
       run: |
         net use ${{secrets.DEV_HOSTPATH}} /user:"${{secrets.DEV_USER}}" "${{secrets.DEV_PASSWORD}}"
-        robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp ${{secrets.DEV_HOSPATH}} /s /e /rt:3
+        robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp ${{secrets.DEV_HOSPATH}} /s /e
 
   deploy-to-uat:
     needs: build
