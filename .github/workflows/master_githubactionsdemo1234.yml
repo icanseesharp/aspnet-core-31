@@ -55,7 +55,7 @@ jobs:
       - name: Deploy
         run: |
           ping 35.244.42.144
-          tracert 35.244.42.144
+          telnet 35.244.42.144
           echo "check the results of ping & tracert"
           net use "${{secrets.DEV_HOSTPATH}}" /user:"${{secrets.DEV_USER}}" "${{secrets.DEV_PASSWORD}}"
           robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp "${{secrets.DEV_HOSTPATH}}" /s /e
