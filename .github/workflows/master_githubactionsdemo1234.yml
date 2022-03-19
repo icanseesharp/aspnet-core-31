@@ -33,14 +33,16 @@ jobs:
   deploy-to-dev:
     needs: build
     name: Deploy to dev
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     environment:
       name: dev
       url: http://dev.my-app.com
     steps:
     - name: Deploy
-      run: echo Deploying to Dev environment
-    
+      run: |
+        net use ${{secrets.dev-hostpath}} /user:${{secrets.dev-user}} ${{secrets.dev-password}}
+        robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp ${{secrets.dev-hostpath}} /s /e /rt:3
+
   deploy-to-uat:
     needs: build
     name: Deploy to UAT
