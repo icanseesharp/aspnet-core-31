@@ -29,19 +29,34 @@ jobs:
 
     - name: dotnet publish
       run: dotnet publish ContosoCrafts.Website/ContosoCrafts.Website.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.0.0
+      with:        
+        name: artifact        
+        path: ${{env.DOTNET_ROOT}}/myapp         
+        if-no-files-found: warn        
+        retention-days: 30
   
   deploy-to-dev:
-    needs: build
-    name: Deploy to dev
-    runs-on: windows-latest
-    environment:
-      name: dev
-      url: http://dev.my-app.com
-    steps:
-    - name: Deploy
-      run: |
-        net use ${{secrets.DEV_HOSTPATH}} /user:"${{secrets.DEV_USER}}" "${{secrets.DEV_PASSWORD}}"
-        robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp ${{secrets.DEV_HOSPATH}} /s /e
+      needs: build
+      name: Deploy to gcp
+      runs-on: windows-latest
+      environment:
+        name: dev
+        url: http://dev.my-app.com
+      steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:          
+          name: artifact
+          path: ${{env.DOTNET_ROOT}}/myapp
+      
+      - name: Deploy
+        run: |
+          net use ${{secrets.DEV_HOSTPATH}} /user:"${{secrets.DEV_USER}}" "${{secrets.DEV_PASSWORD}}"
+          robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp ${{secrets.DEV_HOSTPATH}} /s /e
+
 
   deploy-to-uat:
     needs: build
