@@ -1,6 +1,6 @@
 # Docs for the Azure Web Apps Deploy action: https://go.microsoft.com/fwlink/?linkid=2134798
 
-name: demo-github-actions-ci-cd
+name: githubactions_demo
 
 on:
   push:
