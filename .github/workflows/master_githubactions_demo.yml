@@ -1,5 +1,4 @@
 # Docs for the Azure Web Apps Deploy action: https://go.microsoft.com/fwlink/?linkid=2134798
-# More GitHub Actions for Azure: https://go.microsoft.com/fwlink/?linkid=2135048
 
 name: demo-github-actions-ci-cd
 
@@ -40,7 +39,7 @@ jobs:
   
   deploy-to-dev:
       needs: build
-      name: Deploy to gcp
+      name: Deploy to dev
       runs-on: windows-latest
       environment:
         name: dev
@@ -56,13 +55,13 @@ jobs:
         run: |
           ping 35.244.42.144
           echo "check the results of ping... "
-          net use "${{secrets.DEV_HOSTPATH}}" /user:"${{secrets.DEV_USER}}" "${{secrets.DEV_PASSWORD}}"
-          robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp "${{secrets.DEV_HOSTPATH}}" /s /e
+          net use "${{secrets.HOSTPATH}}" /user:"${{secrets.USER}}" "${{secrets.PASSWORD}}"
+          robocopy ${{env.DOTNET_ROOT}}/myapp/obj/Release/myapp "${{secrets.HOSTPATH}}" /s /e
 
 
   deploy-to-uat:
     needs: build
-    name: Deploy to UAT
+    name: Deploy to uat
     environment:
       name: uat
       url: http://uat.myapp.com
