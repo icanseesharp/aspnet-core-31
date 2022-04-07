@@ -1,1 +1,18 @@
 name: manual_trigger_demo
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '3.1.301'
+    - name: Restore dependencies
+      run: |
+        echo "this build was triggered manually !! "
