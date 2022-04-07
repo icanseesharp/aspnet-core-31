@@ -1,7 +1,6 @@
 name: manual_trigger_demo
 
-on:
-  push: workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   build:
@@ -13,8 +12,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: '3.1.301'
     - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+      run: |
+        echo "this build was triggered manually !! "
