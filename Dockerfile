@@ -3,7 +3,7 @@ WORKDIR /app
 
 # copy csproj and restore as distinct layers
 COPY ContosoCrafts.Website/*.csproj ./aspnetapp/
-RUN dotnet restore /aspnetapp/*.csproj
+RUN dotnet restore ./aspnetapp/ContosoCrafts.Website.csproj
 
 # copy everything else and build app
 COPY ContosoCrafts.Website/. ./aspnetapp/
